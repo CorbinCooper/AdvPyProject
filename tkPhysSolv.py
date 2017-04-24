@@ -124,19 +124,33 @@ class Newton2nd(tk.Frame):
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.pack(side="bottom", pady = 20)
 
-class EM(tk.Frame):
+class EM(tk.Frame): #Home page for Electromagnetism
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         label = tk.Label(self, text="Electromagnetism", font=TITLE_FONT)
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the home page",
+        label.grid(row=0, column=2, pady = 10)
+        button1 = tk.Button(self, text="Coulomb's Law", width=16,
                            command=lambda: controller.show_frame("StartPage"))
-        button.pack()
-        
+        button2 = tk.Button(self, text="Ohm's Law", width=16,
+                           command=lambda: controller.show_frame("StartPage"))
+        button3 = tk.Button(self, text="Gauss' Law", width=16,
+                           command=lambda: controller.show_frame("StartPage"))
+        button4 = tk.Button(self, text="Lorentz Force", width=16,
+                           command=lambda: controller.show_frame("StartPage"))
+        button5 = tk.Button(self, text="Resistivity", width=16,
+                           command=lambda: controller.show_frame("StartPage"))
+        button6 = tk.Button(self, text="Conductivity", width=16,
+                           command=lambda: controller.show_frame("StartPage"))
+        button1.grid(row=2, column=1, padx = 5, pady = 5)
+        button2.grid(row=2, column=2, padx = 5)
+        button3.grid(row=2, column=3, padx = 5)
+        button4.grid(row=3, column=1, padx = 5, pady = 5)
+        button5.grid(row=3, column=2, padx = 5)
+        button6.grid(row=3, column=3, padx = 5)
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
-        bt_button.pack(side="bottom", pady = 20 )
+        bt_button.grid(row=5, column=2, pady = 10)
 
 
 if __name__ == "__main__": 
