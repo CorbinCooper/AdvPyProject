@@ -133,12 +133,10 @@ class EM(tk.Frame): #Home page for Electromagnetism
         label.grid(row=0, column=2, pady = 10)
         button1 = tk.Button(self, text="Coulomb's Law", width=16,
                            command=lambda: controller.show_frame("StartPage"))
-<<<<<<< HEAD
-        button.pack()
-        
+                                   
         bt_button = tk.Button(self, border = '3', text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.pack(side="bottom", pady = 20 )
-=======
+
         button2 = tk.Button(self, text="Ohm's Law", width=16,
                            command=lambda: controller.show_frame("StartPage"))
         button3 = tk.Button(self, text="Gauss' Law", width=16,
@@ -157,7 +155,7 @@ class EM(tk.Frame): #Home page for Electromagnetism
         button6.grid(row=3, column=3, padx = 5)
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.grid(row=5, column=2, pady = 10)
->>>>>>> origin/master
+
 
 
 if __name__ == "__main__": 
