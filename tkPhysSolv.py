@@ -63,13 +63,13 @@ class StartPage(tk.Frame):
         button3 = tk.Button(self, text="Electromagnetism", width=16,
                             command=lambda: controller.show_frame("EM"))
  
-        lbl_kine = tk.Label(self, text = "Kinematics is the study of motion\n using mathematics. Here you will be\n able to solve equations for one-\n dimensional motion using postion,\n velocity, acceleration and time data.", width = 35)
+        lbl_kine = tk.Label(self, width = 35, text = "One-dimensional motion uses\nmathematics to describe motion \nof an object.")
         lbl_kine.grid(row=1,column=0, padx = 5, pady = 5)
        
-        lbl_new = tk.Label(self, text = "Here is some stuff \n about Newton's 2nd Law")
+        lbl_new = tk.Label(self, width = 35, text = "Here is some stuff \n about Newton's 2nd Law")
         lbl_new.grid(row=1,column=1, padx = 5)
         
-        lbl_em = tk.Label(self, text = "Here is some stuff \n about EM")
+        lbl_em = tk.Label(self, width = 35, text = "Here is some stuff \n about EM")
         lbl_em.grid(row=1,column=2, padx = 5)
 
         button1.grid(row=2, column=0, padx = 5, pady = 5)
