@@ -56,27 +56,27 @@ class StartPage(tk.Frame):
         label.grid(row=0, column=1, pady = 10)
 
         
-        button1 = tk.Button(self, text="One-Dimensional Motion", width=25,
+        button1 = tk.Button(self, border = '3', bg = 'light grey', text="One-Dimensional Motion", width=25,
                             command=lambda: controller.show_frame("oneDmotion"))
-        button2 = tk.Button(self, text="Newton's 2nd Law", width=16,
+        button2 = tk.Button(self, border = '3', text="Newton's 2nd Law", width=16,
                             command=lambda: controller.show_frame("Newton2nd"))
-        button3 = tk.Button(self, text="Electromagnetism", width=16,
+        button3 = tk.Button(self, border = '3', text="Electromagnetism", width=16,
                             command=lambda: controller.show_frame("EM"))
  
         lbl_kine = tk.Label(self, width = 35, text = "One-dimensional motion uses\nmathematics to describe motion \nof an object.")
-        lbl_kine.grid(row=1,column=0, padx = 5, pady = 5)
+        lbl_kine.grid(row=2,column=0, padx = 5, pady = 5)
        
         lbl_new = tk.Label(self, width = 35, text = "Here is some stuff \n about Newton's 2nd Law")
-        lbl_new.grid(row=1,column=1, padx = 5)
+        lbl_new.grid(row=2,column=1, padx = 5)
         
         lbl_em = tk.Label(self, width = 35, text = "Electromagnetism is a branch of\nphysics involving the study\nof the electromagnetic \nforce, a type of physical\ninteraction that occurs between\nelectrically charged particles.")
-        lbl_em.grid(row=1,column=2, padx = 5)
+        lbl_em.grid(row=2,column=2, padx = 5)
 
-        button1.grid(row=2, column=0, padx = 5, pady = 5)
-        button2.grid(row=2, column=1, padx = 5)
-        button3.grid(row=2, column=2, padx = 5)
+        button1.grid(row=1, column=0, padx = 5, pady = 1)
+        button2.grid(row=1, column=1, padx = 5)
+        button3.grid(row=1, column=2, padx = 5)
         
-        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button = tk.Button(self, border = '3', text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.grid(row=3, column=1, pady = 10)        
         
 
@@ -91,7 +91,7 @@ class oneDmotion(tk.Frame):
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
         
-        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button = tk.Button(self, border = '3', text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.pack(side="bottom", pady = 20)
         
 class Kinematics(tk.Frame):
@@ -105,7 +105,7 @@ class Kinematics(tk.Frame):
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
         
-        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button = tk.Button(self, border = '3', text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.pack(side="bottom", pady = 20)
         
         
@@ -121,7 +121,7 @@ class Newton2nd(tk.Frame):
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
 
-        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button = tk.Button(self, border = '3', text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.pack(side="bottom", pady = 20)
 
 class EM(tk.Frame):
@@ -135,7 +135,7 @@ class EM(tk.Frame):
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
         
-        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button = tk.Button(self, border = '3', text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.pack(side="bottom", pady = 20 )
 
 
