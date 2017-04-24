@@ -134,9 +134,6 @@ class EM(tk.Frame): #Home page for Electromagnetism
         button1 = tk.Button(self, text="Coulomb's Law", width=16,
                            command=lambda: controller.show_frame("StartPage"))
                                    
-        bt_button = tk.Button(self, border = '3', text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
-        bt_button.pack(side="bottom", pady = 20 )
-
         button2 = tk.Button(self, text="Ohm's Law", width=16,
                            command=lambda: controller.show_frame("StartPage"))
         button3 = tk.Button(self, text="Gauss' Law", width=16,
