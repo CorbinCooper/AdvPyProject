@@ -62,8 +62,8 @@ class StartPage(tk.Frame):
                             command=lambda: controller.show_frame("Newton2nd"))
         button3 = tk.Button(self, text="Electromagnetism", width=16,
                             command=lambda: controller.show_frame("EM"))
- 
-        lbl_kine = tk.Label(self, text = "Here is some stuff \n about kinematics")
+
+        lbl_kine = tk.Label(self, text = "Kinematics is the study of motion\n using mathematics. Here you will be\n able to solve equations for one-\n dimensional motion using postion,\n velocity, acceleration and time data.", width = 35)
         lbl_kine.grid(row=1,column=0, padx = 5, pady = 5)
        
         lbl_new = tk.Label(self, text = "Here is some stuff \n about Newton's 2nd Law")
