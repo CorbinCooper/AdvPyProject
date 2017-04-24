@@ -29,7 +29,7 @@ class PhysSolv(tk.Tk):
         
         
         self.frames = {}
-        for F in (StartPage, Kinematics, Newton2nd, EM):
+        for F in (StartPage, oneDmotion, Kinematics, Newton2nd, EM):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -56,13 +56,13 @@ class StartPage(tk.Frame):
         label.grid(row=0, column=1, pady = 10)
 
         
-        button1 = tk.Button(self, text="Kinematics", width=16,
-                            command=lambda: controller.show_frame("Kinematics"))
+        button1 = tk.Button(self, text="One-Dimensional Motion", width=25,
+                            command=lambda: controller.show_frame("oneDmotion"))
         button2 = tk.Button(self, text="Newton's 2nd Law", width=16,
                             command=lambda: controller.show_frame("Newton2nd"))
         button3 = tk.Button(self, text="Electromagnetism", width=16,
                             command=lambda: controller.show_frame("EM"))
-
+ 
         lbl_kine = tk.Label(self, text = "Kinematics is the study of motion\n using mathematics. Here you will be\n able to solve equations for one-\n dimensional motion using postion,\n velocity, acceleration and time data.", width = 35)
         lbl_kine.grid(row=1,column=0, padx = 5, pady = 5)
        
@@ -80,6 +80,20 @@ class StartPage(tk.Frame):
         bt_button.grid(row=3, column=1, pady = 10)        
         
 
+class oneDmotion(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="One-Dimensional Motion", font=TITLE_FONT)
+        label.pack(side="top", fill="x", pady=10)
+        button = tk.Button(self, text="Go to the home page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.pack()
+        
+        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button.pack(side="bottom", pady = 20)
+        
 class Kinematics(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -93,7 +107,6 @@ class Kinematics(tk.Frame):
         
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.pack(side="bottom", pady = 20)
-        
         
         
 
