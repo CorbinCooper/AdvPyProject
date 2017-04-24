@@ -69,7 +69,7 @@ class StartPage(tk.Frame):
         lbl_new = tk.Label(self, width = 35, text = "Here is some stuff \n about Newton's 2nd Law")
         lbl_new.grid(row=1,column=1, padx = 5)
         
-        lbl_em = tk.Label(self, width = 35, text = "Here is some stuff \n about EM")
+        lbl_em = tk.Label(self, width = 35, text = "Electromagnetism is a branch of\nphysics involving the study\nof the electromagnetic \nforce, a type of physical\ninteraction that occurs between\nelectrically charged particles.")
         lbl_em.grid(row=1,column=2, padx = 5)
 
         button1.grid(row=2, column=0, padx = 5, pady = 5)
