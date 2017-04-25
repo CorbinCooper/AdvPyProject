@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Apr 20 16:14:04 2017
-@author: Robert
+@author: Robert Millican, Eric Hartline, Corbin Cooper
 """
 
 import tkinter as tk   # python3
 #import Tkinter as tk   # python
 
-from tkinter import*
 
 TITLE_FONT = ("Helvetica", 18, "bold")
-
+SUB_FONT = ("Helvetica", 14, 'bold' )
 
 
 class PhysSolv(tk.Tk):
@@ -30,7 +29,7 @@ class PhysSolv(tk.Tk):
         
         
         self.frames = {}
-        for F in (StartPage, oneDmotion, Kinematics, Newton2nd, EM, CoulombsLaw, OhmsLaw, GuassLaw, LorentzForce, Resistivity, Conductivity):
+        for F in (StartPage, oneDmotion, Kinematics, Momentum, FreeFall, Newton2nd, EM, CoulombsLaw, OhmsLaw, GuassLaw, LorentzForce, Resistivity, Conductivity):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -87,13 +86,17 @@ class oneDmotion(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         label = tk.Label(self, text="One-Dimensional Motion", font=TITLE_FONT)
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the home page",
-                           command=lambda: controller.show_frame("StartPage"))
-        button.pack()
+        label.grid(row=0,  column=1, pady=10)
         
+        lb_kine = tk.Label(self, font=SUB_FONT, text='Kinematics')
+        lb_kine.grid(row=1,column=0)        
+    
+        button = tk.Button(self, border = '3', text="Back to the home page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.grid(row=3,column=0)
+    
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
-        bt_button.pack(side="bottom", pady = 20)
+        bt_button.grid(row=3,column=3)
         
 class Kinematics(tk.Frame):
 
@@ -101,39 +104,65 @@ class Kinematics(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         label = tk.Label(self, text="Kinematics", font=TITLE_FONT)
+        label.grid(row=0, column=2, columnspan = 2, pady=10)
+        button = tk.Button(self, border = '3', text="Back to the home page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.grid(row=15, column=0)
+        
+        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button.grid(row=15,column=3)
+        
+class Momentum(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Momentum", font=TITLE_FONT)
         label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the home page",
+        button = tk.Button(self, border = '3', text="Back to the home page",
                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
         
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.pack(side="bottom", pady = 20)
         
+class FreeFall(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Free Fall", font=TITLE_FONT)
+        label.pack(side="top", fill="x", pady=10)
+        button = tk.Button(self, border = '3', text="Back to the home page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.pack()
         
+        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button.pack(side="bottom", pady = 20)
 
 class Newton2nd(tk.Frame):
 
-    def Fmenu(*args):
-        if Ftype.get() == "Generic":
-            menu_SolveFor = tk.OptionMenu(self, find, "Force", "Mass", "Acceleration")
-            menu_SolveFor.grid(row=5, column=4, padx = 5, pady = 5)
-
-        elif Ftype.get() == "Gravity":
-            menu_SolveFor = tk.OptionMenu(self, find, "Force", "Mass", "Gravity")
-            menu_SolveFor.grid(row=5, column=4, padx = 5, pady = 5)
-
-        else:
-            print('')
+#    def Fmenu(*args):
+#        if Ftype.get() == "Generic":
+#            menu_SolveFor = tk.OptionMenu(self, find, "Force", "Mass", "Acceleration")
+#            menu_SolveFor.grid(row=5, column=4, padx = 5, pady = 5)
+#
+#        elif Ftype.get() == "Gravity":
+#            menu_SolveFor = tk.OptionMenu(self, find, "Force", "Mass", "Gravity")
+#            menu_SolveFor.grid(row=5, column=4, padx = 5, pady = 5)
+#
+#        else:
+#            print('')
  
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        units = IntVar()
+        units = tk.IntVar()
         units.set(1)
-        find = StringVar()
-        Ftype = StringVar()
+        find = tk.StringVar()
+        Ftype = tk.StringVar()
         Ftype.set("Generic")
         
         lbl_title = tk.Label(self, text="Newton's 2nd Law", font=TITLE_FONT)
@@ -196,37 +225,37 @@ class Newton2nd(tk.Frame):
 
         def entry_fields(*args):
 
-            label1 = Label(self)
-            label2 = Label(self)
+            label1 = tk.Label(self)
+            label2 = tk.Label(self)
             
             label1.grid_remove()
             label2.grid_remove()
 
-            label1.grid(row=6, column=3, sticky=E)
-            label2.grid(row=7, column=3, sticky=E)        
-            
+            label1.grid(row=6, column=3, sticky='e')
+            label2.grid(row=7, column=3, sticky='e')        
+       
             if Ftype.get() == "Generic":
                 if find.get() == "Force":
                     label1.config(text="               Mass (kg): ")
-                    mass = Entry(self)
+                    mass = tk.Entry(self)
                     mass.grid(row=6, column=4)
                     label2.config(text="Acceleration (m/s^2): ")
-                    accel = Entry(self)
+                    accel = tk.Entry(self)
                     accel.grid(row=7, column=4)
-                    but_solve.config(command = Gen_Force())
+                    but_solve.config(command = lambda: Gen_Force(float(mass.get()),float(accel.get())))
                 elif find.get() == "Mass":
                     label1.config(text="Force (N): ")
-                    force = Entry(self)
+                    force = tk.Entry(self)
                     force.grid(row=6, column=4)
                     label2.config(text="Acceleration (m/s^2): ")
-                    accel = Entry(self)
+                    accel = tk.Entry(self)
                     accel.grid(row=7, column=4)
                 elif find.get() == "Acceleration":
                     label1.config(text="Force (N): ")
-                    force = Entry(self)
+                    force = tk.Entry(self)
                     force.grid(row=6, column=4)
                     label2.config(text="                       Mass (kg):")
-                    mass = Entry(self)
+                    mass = tk.Entry(self)
                     mass.grid(row=7, column=4)
                 else:
                     print('')
@@ -234,24 +263,24 @@ class Newton2nd(tk.Frame):
             if Ftype.get() == "Gravity":
                 if find.get() == "Weight":
                     label1.config(text="                   Mass (kg): ")
-                    mass = Entry(self)
+                    mass = tk.Entry(self)
                     mass.grid(row=6, column=4)
                     label2.config(text="       Gravity (m/s^2): ")
-                    grav = Entry(self)
+                    grav = tk.Entry(self)
                     grav.grid(row=7, column=4)
                 elif find.get() == "Mass":
                     label1.config(text="Weight (N): ")
-                    weight = Entry(self)
+                    weight = tk.Entry(self)
                     weight.grid(row=6, column=4)
                     label2.config(text="       Gravity (m/s^2): ")
-                    grav = Entry(self)
+                    grav = tk.Entry(self)
                     grav.grid(row=7, column=4)
                 elif find.get() == "Gravity":
                     label1.config(text="Weight (N): ")
-                    weight = Entry(self)
+                    weight = tk.Entry(self)
                     weight.grid(row=6, column=4)
                     label2.config(text="                       Mass (kg):")
-                    mass = Entry(self)
+                    mass = tk.Entry(self)
                     mass.grid(row=7, column=4)
                 else:
                     print('')
@@ -259,24 +288,24 @@ class Newton2nd(tk.Frame):
             if Ftype.get() == "Spring":
                 if find.get() == "Spring Force":
                     label1.config(text="Spring Constant: ")
-                    cons = Entry(self)
+                    cons = tk.Entry(self)
                     cons.grid(row=6, column=4)
                     label2.config(text="Displacement (m): ")
-                    disp = Entry(self)
+                    disp = tk.Entry(self)
                     disp.grid(row=7, column=4)
                 elif find.get() == "Spring Constant":
                     label1.config(text="Spring Force (N): ")
-                    force = Entry(self)
+                    force = tk.Entry(self)
                     force.grid(row=6, column=4)
                     label2.config(text="Displacement (m): ")
-                    disp = Entry(self)
+                    disp = tk.Entry(self)
                     disp.grid(row=7, column=4)
                 elif find.get() == "Displacement":
                     label1.config(text="Spring Force (N): ")
-                    force = Entry(self)
+                    force = tk.Entry(self)
                     force.grid(row=6, column=4)
                     label2.config(text="       Spring Constant:")
-                    cons = Entry(self)
+                    cons = tk.Entry(self)
                     cons.grid(row=7, column=4)
                 else:
                     print('')
@@ -284,24 +313,24 @@ class Newton2nd(tk.Frame):
             if Ftype.get() == "Friction":
                 if find.get() == "Friction Force":
                     label1.config(text="     Friction Coefficient: ")
-                    coeff = Entry(self)
+                    coeff = tk.Entry(self)
                     coeff.grid(row=6, column=4)
                     label2.config(text="     Normal Force (N): ")
-                    norm = Entry(self)
+                    norm = tk.Entry(self)
                     norm.grid(row=7, column=4)
                 elif find.get() == "Friction Coefficient":
                     label1.config(text="     Friction Force (N): ")
-                    force = Entry(self)
+                    force = tk.Entry(self)
                     force.grid(row=6, column=4)
                     label2.config(text="     Normal Force (N): ")
-                    norm = Entry(self)
+                    norm = tk.Entry(self)
                     norm.grid(row=7, column=4)
                 elif find.get() == "Normal Force":
                     label1.config(text="     Friction Force (N): ")
-                    force = Entry(self)
+                    force = tk.Entry(self)
                     force.grid(row=6, column=4)
                     label2.config(text="    Friction Coefficient:")
-                    coeff = Entry(self)
+                    coeff = tk.Entry(self)
                     coeff.grid(row=7, column=4)
                 else:
                     print('')
@@ -309,24 +338,24 @@ class Newton2nd(tk.Frame):
             if Ftype.get() == "Pressure":
                 if find.get() == "Force":
                     label1.config(text="     Pressure (Pa): ")
-                    press = Entry(self)
+                    press = tk.Entry(self)
                     press.grid(row=6, column=4)
                     label2.config(text="     Area (m^2): ")
-                    area = Entry(self)
+                    area = tk.Entry(self)
                     area.grid(row=7, column=4)
                 elif find.get() == "Pressure":
                     label1.config(text="          Force (N): ")
-                    force = Entry(self)
+                    force = tk.Entry(self)
                     force.grid(row=6, column=4)
                     label2.config(text="            Area (m^2): ")
-                    area = Entry(self)
+                    area = tk.Entry(self)
                     area.grid(row=7, column=4)
                 elif find.get() == "Area":
                     label1.config(text="     Force (N): ")
-                    force = Entry(self)
+                    force = tk.Entry(self)
                     force.grid(row=6, column=4)
                     label2.config(text="    Pressure (Pa):")
-                    press = Entry(self)
+                    press = tk.Entry(self)
                     press.grid(row=7, column=4)
                 else:
                     print('')
@@ -334,18 +363,15 @@ class Newton2nd(tk.Frame):
             else:
                 print('')
 
-        def Gen_Force():
-            mass = mass.get()
-            accel = accel.get()
-
+        def Gen_Force(mass, accel):
             force = mass * accel
             lbl_Atype.config(text="Force = ")
-            lbl_ans.config(force, " N")
+            lbl_ans.config(text = str(force) + " N")
     
         Ftype.trace("w", Fmenu)
         find.trace("w", entry_fields)
 
-        button = tk.Button(self, text="Go to the home page",
+        button = tk.Button(self, border = '3', text="Back to the home page",
                            command=lambda: controller.show_frame("StartPage"))
         button.grid(row=10, column=3)
 
@@ -422,10 +448,10 @@ class CoulombsLaw(tk.Frame):
         labe6.grid(row=3, column=6, pady = 10)
         
         buttonCalcF = tk.Button(self, text="Calculate F",
-                           command=lambda: Print(4))
+                           command=lambda: tk.Print(4))
         buttonCalcF.grid(row=5, column=3, pady = 10)
         buttonCalcE = tk.Button(self, text="Calculate E",
-                           command=lambda: Print(4))
+                           command=lambda: tk.Print(4))
         buttonCalcE.grid(row=5, column=7, pady = 10)
         
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
@@ -468,10 +494,10 @@ class OhmsLaw(tk.Frame):
         labe6 = tk.Label(self, text="Resistance (R)")
         labe6.grid(row=3, column=6, pady = 10)
         buttonCalcF = tk.Button(self, text="Calculate V",
-                           command=lambda: Print(4))
+                           command=lambda: tk.Print(4))
         buttonCalcF.grid(row=5, column=3, pady = 10)
         buttonCalcE = tk.Button(self, text="Calculate I",
-                           command=lambda: Print(4))
+                           command=lambda: tk.Print(4))
         buttonCalcE.grid(row=5
                          , column=7, pady = 10)
 
