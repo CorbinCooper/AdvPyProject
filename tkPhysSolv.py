@@ -159,14 +159,51 @@ class CoulombsLaw(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         label = tk.Label(self, text="Coulomb's Law", font=TITLE_FONT)
-        label.grid(row=0, column=2, pady = 10)
-        button = tk.Button(self, text="Back",
-                           command=lambda: controller.show_frame("EM"))
-        button.grid(row=2, column=2, pady = 10)
+        label.grid(row=0, column=2, pady = 10)      
+        
+        label1 = tk.Label(self, text="Force")
+        label1.grid(row=1, column=3, pady = 10)
+        label2 = tk.Label(self, text="Electric Field")
+        label2.grid(row=1, column=7, pady = 10)
+        entry1 = tk.Entry(self)       
+        entry1.grid(row=2, column=3, pady = 10)
+        labe2 = tk.Label(self, text="Charge (q) 1")
+        labe2.grid(row=2, column=2, pady = 10)
+        
+        entry2 = tk.Entry(self)       
+        entry2.grid(row=3, column=3, pady = 10)
+        labe3 = tk.Label(self, text="Charge (q) 2")
+        labe3.grid(row=3, column=2, pady = 10)
+        
+        entry3 = tk.Entry(self)       
+        entry3.grid(row=4, column=3, pady = 10)
+        labe4 = tk.Label(self, text="Radius (r)")
+        labe4.grid(row=4, column=2, pady = 10)
+        
+        entry4 = tk.Entry(self)       
+        entry4.grid(row=2, column=7, pady = 10)
+        labe3 = tk.Label(self, text="Charge (q)")
+        labe3.grid(row=2, column=6, pady = 10)
+        
+        entry5 = tk.Entry(self)       
+        entry5.grid(row=3, column=7, pady = 10)
+        labe6 = tk.Label(self, text="Radius (r)")
+        labe6.grid(row=3, column=6, pady = 10)
+        buttonCalcF = tk.Button(self, text="Calculate F",
+                           command=lambda: Print(4))
+        buttonCalcF.grid(row=5, column=3, pady = 10)
+        buttonCalcE = tk.Button(self, text="Calculate E",
+                           command=lambda: Print(4))
+        buttonCalcE.grid(row=5, column=7, pady = 10)
         
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
-        bt_button.grid(row=5, column=2, pady = 10)
-
+        bt_button.grid(row=6, column=4, pady = 10)
+        button = tk.Button(self, text="Back",
+                           command=lambda: controller.show_frame("EM"))
+        button.grid(row=6, column=2, pady = 10)
+    def showEntryFields():
+        print(5)
+        
 class OhmsLaw(tk.Frame):
 
     def __init__(self, parent, controller):
