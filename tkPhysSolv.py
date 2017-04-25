@@ -29,7 +29,7 @@ class PhysSolv(tk.Tk):
         
         
         self.frames = {}
-        for F in (StartPage, oneDmotion, Kinematics, Newton2nd, EM):
+        for F in (StartPage, oneDmotion, Kinematics, Newton2nd, EM, CoulombsLaw, OhmsLaw, GuassLaw, LorentzForce, Resistivity, Conductivity):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -132,18 +132,17 @@ class EM(tk.Frame): #Home page for Electromagnetism
         label = tk.Label(self, text="Electromagnetism", font=TITLE_FONT)
         label.grid(row=0, column=2, pady = 10)
         button1 = tk.Button(self, text="Coulomb's Law", width=16,
-                           command=lambda: controller.show_frame("StartPage"))
-                                   
+                           command=lambda: controller.show_frame("CoulombsLaw"))
         button2 = tk.Button(self, text="Ohm's Law", width=16,
-                           command=lambda: controller.show_frame("StartPage"))
+                           command=lambda: controller.show_frame("OhmsLaw"))
         button3 = tk.Button(self, text="Gauss' Law", width=16,
-                           command=lambda: controller.show_frame("StartPage"))
+                           command=lambda: controller.show_frame("GuassLaw"))
         button4 = tk.Button(self, text="Lorentz Force", width=16,
-                           command=lambda: controller.show_frame("StartPage"))
+                           command=lambda: controller.show_frame("LorentzForce"))
         button5 = tk.Button(self, text="Resistivity", width=16,
-                           command=lambda: controller.show_frame("StartPage"))
+                           command=lambda: controller.show_frame("Resistivity"))
         button6 = tk.Button(self, text="Conductivity", width=16,
-                           command=lambda: controller.show_frame("StartPage"))
+                           command=lambda: controller.show_frame("Conductivity"))
         button1.grid(row=2, column=1, padx = 5, pady = 5)
         button2.grid(row=2, column=2, padx = 5)
         button3.grid(row=2, column=3, padx = 5)
@@ -153,6 +152,90 @@ class EM(tk.Frame): #Home page for Electromagnetism
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.grid(row=5, column=2, pady = 10)
 
+
+class CoulombsLaw(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Coulomb's Law", font=TITLE_FONT)
+        label.grid(row=0, column=2, pady = 10)
+        button = tk.Button(self, text="Back",
+                           command=lambda: controller.show_frame("EM"))
+        button.grid(row=2, column=2, pady = 10)
+        
+        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button.grid(row=5, column=2, pady = 10)
+
+class OhmsLaw(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Ohm's Law", font=TITLE_FONT)
+        label.grid(row=0, column=2, pady = 10)
+        button = tk.Button(self, text="Back",
+                           command=lambda: controller.show_frame("EM"))
+        button.grid(row=2, column=2, pady = 10)
+        
+        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button.grid(row=5, column=2, pady = 10)
+
+class GuassLaw(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Guass' Law", font=TITLE_FONT)
+        label.grid(row=0, column=2, pady = 10)
+        button = tk.Button(self, text="Back",
+                           command=lambda: controller.show_frame("EM"))
+        button.grid(row=2, column=2, pady = 10)
+        
+        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button.grid(row=5, column=2, pady = 10)
+
+class LorentzForce(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Lorentz Force", font=TITLE_FONT)
+        label.grid(row=0, column=2, pady = 10)
+        button = tk.Button(self, text="Back",
+                           command=lambda: controller.show_frame("EM"))
+        button.grid(row=2, column=2, pady = 10)
+        
+        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button.grid(row=5, column=2, pady = 10)
+
+class Resistivity(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Resistivity", font=TITLE_FONT)
+        label.grid(row=0, column=2, pady = 10)
+        button = tk.Button(self, text="Back",
+                           command=lambda: controller.show_frame("EM"))
+        button.grid(row=2, column=2, pady = 10)
+        
+        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button.grid(row=5, column=2, pady = 10)
+
+class Conductivity(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Conductivity", font=TITLE_FONT)
+        label.grid(row=0, column=2, pady = 10)
+        button = tk.Button(self, text="Back",
+                           command=lambda: controller.show_frame("EM"))
+        button.grid(row=2, column=2, pady = 10)
+        
+        bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
+        bt_button.grid(row=5, column=2, pady = 10)
 
 
 if __name__ == "__main__": 
