@@ -142,18 +142,6 @@ class FreeFall(tk.Frame):
 
 class Newton2nd(tk.Frame):
 
-#    def Fmenu(*args):
-#        if Ftype.get() == "Generic":
-#            menu_SolveFor = tk.OptionMenu(self, find, "Force", "Mass", "Acceleration")
-#            menu_SolveFor.grid(row=5, column=4, padx = 5, pady = 5)
-#
-#        elif Ftype.get() == "Gravity":
-#            menu_SolveFor = tk.OptionMenu(self, find, "Force", "Mass", "Gravity")
-#            menu_SolveFor.grid(row=5, column=4, padx = 5, pady = 5)
-#
-#        else:
-#            print('')
- 
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -221,28 +209,32 @@ class Newton2nd(tk.Frame):
                 
             else:
                 print('')
+
+
     
+        label1 = tk.Label(self)
+        label2 = tk.Label(self)
+
+        label1.grid(row=6, column=3, sticky='e')
+        label2.grid(row=7, column=3, sticky='e')
 
         def entry_fields(*args):
 
-            label1 = tk.Label(self)
-            label2 = tk.Label(self)
-            
-            label1.grid_remove()
-            label2.grid_remove()
+            label1.config(text="                          ")
+            label2.config(text="                          ")
+            lbl_Atype.config(text="                          ")
+            lbl_ans.config(text="                          ")
 
-            label1.grid(row=6, column=3, sticky='e')
-            label2.grid(row=7, column=3, sticky='e')        
-       
             if Ftype.get() == "Generic":
                 if find.get() == "Force":
-                    label1.config(text="               Mass (kg): ")
+                    label1.config(text="Mass (kg): ")
                     mass = tk.Entry(self)
                     mass.grid(row=6, column=4)
                     label2.config(text="Acceleration (m/s^2): ")
                     accel = tk.Entry(self)
                     accel.grid(row=7, column=4)
                     but_solve.config(command = lambda: Gen_Force(float(mass.get()),float(accel.get())))
+                    
                 elif find.get() == "Mass":
                     label1.config(text="Force (N): ")
                     force = tk.Entry(self)
@@ -250,38 +242,49 @@ class Newton2nd(tk.Frame):
                     label2.config(text="Acceleration (m/s^2): ")
                     accel = tk.Entry(self)
                     accel.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Gen_Mass(float(force.get()),float(accel.get())))
+
+                    
                 elif find.get() == "Acceleration":
                     label1.config(text="Force (N): ")
                     force = tk.Entry(self)
                     force.grid(row=6, column=4)
-                    label2.config(text="                       Mass (kg):")
+                    label2.config(text="Mass (kg):")
                     mass = tk.Entry(self)
                     mass.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Gen_Accel(float(force.get()),float(mass.get())))
+                    
                 else:
                     print('')
 
             if Ftype.get() == "Gravity":
                 if find.get() == "Weight":
-                    label1.config(text="                   Mass (kg): ")
+                    label1.config(text="Mass (kg): ")
                     mass = tk.Entry(self)
                     mass.grid(row=6, column=4)
-                    label2.config(text="       Gravity (m/s^2): ")
+                    label2.config(text="Gravity (m/s^2): ")
                     grav = tk.Entry(self)
                     grav.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Grav_Weight(float(mass.get()),float(grav.get())))
+                    
                 elif find.get() == "Mass":
                     label1.config(text="Weight (N): ")
                     weight = tk.Entry(self)
                     weight.grid(row=6, column=4)
-                    label2.config(text="       Gravity (m/s^2): ")
+                    label2.config(text="Gravity (m/s^2): ")
                     grav = tk.Entry(self)
                     grav.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Grav_Mass(float(weight.get()),float(grav.get())))
+                    
                 elif find.get() == "Gravity":
                     label1.config(text="Weight (N): ")
                     weight = tk.Entry(self)
                     weight.grid(row=6, column=4)
-                    label2.config(text="                       Mass (kg):")
+                    label2.config(text="Mass (kg):")
                     mass = tk.Entry(self)
                     mass.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Grav_Grav(float(weight.get()),float(mass.get())))
+                    
                 else:
                     print('')
 
@@ -304,7 +307,7 @@ class Newton2nd(tk.Frame):
                     label1.config(text="Spring Force (N): ")
                     force = tk.Entry(self)
                     force.grid(row=6, column=4)
-                    label2.config(text="       Spring Constant:")
+                    label2.config(text="Spring Constant:")
                     cons = tk.Entry(self)
                     cons.grid(row=7, column=4)
                 else:
@@ -312,24 +315,24 @@ class Newton2nd(tk.Frame):
 
             if Ftype.get() == "Friction":
                 if find.get() == "Friction Force":
-                    label1.config(text="     Friction Coefficient: ")
+                    label1.config(text="Friction Coefficient: ")
                     coeff = tk.Entry(self)
                     coeff.grid(row=6, column=4)
-                    label2.config(text="     Normal Force (N): ")
+                    label2.config(text="Normal Force (N): ")
                     norm = tk.Entry(self)
                     norm.grid(row=7, column=4)
                 elif find.get() == "Friction Coefficient":
-                    label1.config(text="     Friction Force (N): ")
+                    label1.config(text="Friction Force (N): ")
                     force = tk.Entry(self)
                     force.grid(row=6, column=4)
-                    label2.config(text="     Normal Force (N): ")
+                    label2.config(text="Normal Force (N): ")
                     norm = tk.Entry(self)
                     norm.grid(row=7, column=4)
                 elif find.get() == "Normal Force":
-                    label1.config(text="     Friction Force (N): ")
+                    label1.config(text="Friction Force (N): ")
                     force = tk.Entry(self)
                     force.grid(row=6, column=4)
-                    label2.config(text="    Friction Coefficient:")
+                    label2.config(text="Friction Coefficient:")
                     coeff = tk.Entry(self)
                     coeff.grid(row=7, column=4)
                 else:
@@ -337,24 +340,24 @@ class Newton2nd(tk.Frame):
 
             if Ftype.get() == "Pressure":
                 if find.get() == "Force":
-                    label1.config(text="     Pressure (Pa): ")
+                    label1.config(text="Pressure (Pa): ")
                     press = tk.Entry(self)
                     press.grid(row=6, column=4)
-                    label2.config(text="     Area (m^2): ")
+                    label2.config(text="Area (m^2): ")
                     area = tk.Entry(self)
                     area.grid(row=7, column=4)
                 elif find.get() == "Pressure":
-                    label1.config(text="          Force (N): ")
+                    label1.config(text="Force (N): ")
                     force = tk.Entry(self)
                     force.grid(row=6, column=4)
-                    label2.config(text="            Area (m^2): ")
+                    label2.config(text="Area (m^2): ")
                     area = tk.Entry(self)
                     area.grid(row=7, column=4)
                 elif find.get() == "Area":
-                    label1.config(text="     Force (N): ")
+                    label1.config(text=" Force (N): ")
                     force = tk.Entry(self)
                     force.grid(row=6, column=4)
-                    label2.config(text="    Pressure (Pa):")
+                    label2.config(text="Pressure (Pa):")
                     press = tk.Entry(self)
                     press.grid(row=7, column=4)
                 else:
@@ -367,6 +370,32 @@ class Newton2nd(tk.Frame):
             force = mass * accel
             lbl_Atype.config(text="Force = ")
             lbl_ans.config(text = str(force) + " N")
+
+        def Gen_Mass(force, accel):
+            mass = force / accel
+            lbl_Atype.config(text="Mass = ")
+            lbl_ans.config(text = str(mass) + " kg")            
+
+        def Gen_Accel(force, mass):
+            accel = force / mass
+            lbl_Atype.config(text="Acceleration = ")
+            lbl_ans.config(text = str(accel) + " m/s^2")
+
+        def Grav_Weight(mass, grav):
+            weight = mass * grav
+            lbl_Atype.config(text="Weight = ")
+            lbl_ans.config(text = str(weight) + " N")
+
+        def Grav_Mass(weight, grav):
+            mass = weight / grav
+            lbl_Atype.config(text="Mass = ")
+            lbl_ans.config(text = str(mass) + " kg")
+
+        def Grav_Grav(weight, mass):
+            grav = weight / mass
+            lbl_Atype.config(text="Gravity = ")
+            lbl_ans.config(text = str(grav) + " m/s^2")
+            
     
         Ftype.trace("w", Fmenu)
         find.trace("w", entry_fields)
