@@ -656,7 +656,7 @@ class GuassLaw(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         
-        label = tk.Label(self, text="Coulomb's Law", font=TITLE_FONT)
+        label = tk.Label(self, text="Guass' Law", font=TITLE_FONT)
         label.grid(row=0, column=2, pady = 10)      
         
         label1 = tk.Label(self, text="Force")
@@ -786,7 +786,7 @@ class Resistivity(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        label = tk.Label(self, text="Lorentz Force", font=TITLE_FONT)
+        label = tk.Label(self, text="Resistivity", font=TITLE_FONT)
         label.grid(row=0, column=2, pady = 10)      
         
         label1 = tk.Label(self, text="Force")
@@ -840,7 +840,7 @@ class Conductivity(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        label = tk.Label(self, text="Lorentz Force", font=TITLE_FONT)
+        label = tk.Label(self, text="Conductivity", font=TITLE_FONT)
         label.grid(row=0, column=2, pady = 10)      
         
         label1 = tk.Label(self, text="Force")
