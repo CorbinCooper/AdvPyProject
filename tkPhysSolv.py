@@ -6,7 +6,7 @@ Created on Thu Apr 20 16:14:04 2017
 
 import tkinter as tk   # python3
 #import Tkinter as tk   # python
-
+from math import sqrt
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 SUB_FONT = ("Helvetica", 14, 'bold' )
@@ -79,7 +79,9 @@ class StartPage(tk.Frame):
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.grid(row=3, column=1, pady = 10)        
         
-
+#        bt_kine = tk.Button(self, border = '3', text="Kinematics",
+#                            command=lambda: controller.show_frame("Kinematics"))
+#        bt_kine.grid(row=4,column=0)
 class oneDmotion(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -89,25 +91,281 @@ class oneDmotion(tk.Frame):
         label.grid(row=0,  column=1, pady=10)
         
         lb_kine = tk.Label(self, font=SUB_FONT, text='Kinematics')
-        lb_kine.grid(row=1,column=0)        
-    
+        lb_mom = tk.Label(self, font=SUB_FONT, text='Momentum')
+        lb_ff = tk.Label(self, font=SUB_FONT, text='Free Fall')
+        lb_kine.grid(row=1,column=0)
+        lb_mom.grid(row=1,column=1)
+        lb_ff.grid(row=1,column=2)        
+        
+        lb_kineD = tk.Label(self, text = 'Kinematics is the study of motion\nusing mathematics. One-dimensional\nkinematics with constant \nacceleration utilizes equations\nthat relate position, velocity and\nacceleration at two instances in\ntime.', width=35)
+        lb_momD = tk.Label(self, width=35, text = 'Momentum is the mass of an object\nmultiplied by its velocity.\nConservation of momentum is used\nwhen acceleration is not constant\nand energy is not conserved.')
+        lb_ffD = tk.Label(self, width=35, text = 'Free fall is a subsection of\nkinematics in which an object is\ndropped or thrown vertically near a\nplanets surface and accelerates\nonly due to the influence of\ngravity on the object.')      
+        lb_kineD.grid(row=2,column=0)        
+        lb_momD.grid(row=2,column=1)        
+        lb_ffD.grid(row=2,column=2)        
+        
+        bt_kine = tk.Button(self, border = '3', text="Kinematics",
+                            command=lambda: controller.show_frame("Kinematics"))
+        bt_mom = tk.Button(self, border = '3', text='Momentum',
+                           command=lambda: controller.show_frame("Momentum"))
+        bt_ff = tk.Button(self, border = '3', text='Free Fall',
+                           command=lambda: controller.show_frame("FreeFall"))
+        bt_kine.grid(row=3,column=0)
+        bt_mom.grid(row=3,column=1)
+        bt_ff.grid(row=3,column=2)        
+                
         button = tk.Button(self, border = '3', text="Back to the home page",
                            command=lambda: controller.show_frame("StartPage"))
-        button.grid(row=3,column=0)
+        button.grid(row=5,column=0)
     
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
-        bt_button.grid(row=3,column=3)
+        bt_button.grid(row=5,column=2)
         
 class Kinematics(tk.Frame):
 
+        
+#    def Calculate (si,sf,vi,vf,a,t):
+#        CheckFilled(si,sf,vi,vf,a,t)
+        
     def __init__(self, parent, controller):
+        def isFloat(string):
+            try:
+                float(string)
+                return True
+            except ValueError:
+                return False     
+                
+        def CheckFilled(si,sf,vi,vf,a,t,siHave,sfHave,viHave,vfHave,aHave,tHave):
+            lb_val_calc_si.config(text='')
+            lb_val_calc_sf.config(text='')
+            lb_val_calc_vi.config(text='')
+            lb_val_calc_vf.config(text='')
+            lb_val_calc_a.config(text='')
+            lb_val_calc_t.config(text='')
+                        
+            if siHave:
+                lb_val_calc_si.config(text = si)
+            if sfHave:
+                lb_val_calc_sf.config(text = sf)
+            if viHave:
+                lb_val_calc_vi.config(text = vi)
+            if vfHave:
+                lb_val_calc_vf.config(text = vf)
+            if aHave:
+                lb_val_calc_a.config(text = a)
+            if tHave:
+                lb_val_calc_t.config(text = t)
+            return;
+          
+        #vf = vi + a*t  
+        def eqnOne(vi,vf,a,t,viHave,vfHave,aHave,tHave):
+            if(viHave):
+                vi=float(vi)
+            if(vfHave):
+                vf=float(vf)
+            if(aHave):
+                a=float(a)
+            if(tHave):
+                t=float(t)
+            
+            if(viHave and aHave and tHave):
+                calcVf = vi + a*t
+                lb_val_calc_vf.config(text = calcVf)
+            if(vfHave and aHave and tHave):
+                calcVi = a*t - vf
+                lb_val_calc_vi.config(text = calcVi)
+            if(viHave and vfHave and tHave):
+                calcA = (vf - vi) / t
+                lb_val_calc_a.config(text = calcA)
+            if(viHave and vfHave and aHave):
+                calcT = (vf - vi) / a
+                lb_val_calc_t.config(text = calcT)
+            return;
+            
+            if(isFloat(vi)):
+                viHave=True
+            if(isFloat(vf)):
+                vfHave=True
+            if(isFloat(a)):
+                aHave=True
+            if(isFloat(t)):
+                tHave=True
+        
+        #sf = si + vi*t + 0.5*a*t^2
+        def eqn2(si,sf,vi,a,t,siHave,sfHave,viHave,aHave,tHave):
+            if(siHave):
+                si=float(si)
+            if(sfHave):
+                sf=float(sf)
+            if(viHave):
+                vi=float(vi)
+            if(aHave):
+                a=float(a)
+            if(tHave):
+                t=float(t)
+            
+            if(siHave and viHave and aHave and tHave):
+                calcSf = si + vi*t + 0.5*a*t**2
+                lb_val_calc_sf.config(text = calcSf)
+            if(sfHave and viHave and aHave and tHave):
+                calcSi = -sf + vi*t + 0.5*a*t**2
+                lb_val_calc_si.config(text = calcSi)
+            if(siHave and sfHave and aHave and tHave):
+                calcVi = (sf - si - 0.5*a*t**2)/t
+                lb_val_calc_vi.config(text = calcVi)
+            if(siHave and sfHave and viHave and tHave):
+                calcA = (sf - si - vi*t)/(0.5*t**2)
+                lb_val_calc_a.config(text = calcA)
+            if(siHave and sfHave and viHave and aHave):
+                ds = sf - si
+                if((vi**2 - 4*0.5*a*(-ds)) >0):
+                    calcT1 = (-vi + sqrt(vi**2 - 4*0.5*a*(-ds)))/(2*0.5*a)
+                    calcT2 = (-vi - sqrt(vi**2 - 4*0.5*a*(-ds)))/(2*0.5*a)
+                else:
+                    print("discriminate not real")
+                if(calcT1 > 0):
+                    lb_val_calc_t.config(text = calcT1)
+                elif(calcT2 >0):
+                    lb_val_calc_t.config(text = calcT2)
+                else:
+                    print("No positive time")
+            
+            if(isFloat(si)):
+                siHave=True
+            if(isFloat(sf)):
+                sfHave=True
+            if(isFloat(vi)):
+                viHave=True
+            if(isFloat(a)):
+                aHave=True
+            if(isFloat(t)):
+                tHave=True
+
+                   
+            return;
+        def Calculate(si,sf,vi,vf,a,t):
+            siHave = isFloat(si)            
+            sfHave = isFloat(sf)
+            viHave = isFloat(vi)
+            vfHave = isFloat(vf)
+            aHave = isFloat(a)
+            tHave = isFloat(t)
+
+            CheckFilled(si,sf,vi,vf,a,t,siHave,sfHave,viHave,vfHave,aHave,tHave)
+            
+#            if (not(viHave and vfHave and aHave and tHave)):
+            eqnOne(vi,vf,a,t,viHave,vfHave,aHave,tHave)
+
+#            if(not(siHave and sfHave and viHave and aHave and tHave)):
+            eqn2(si,sf,vi,a,t,siHave,sfHave,viHave,aHave,tHave)
+ 
+#            if (not(viHave and vfHave and aHave and tHave)):
+            eqnOne(vi,vf,a,t,viHave,vfHave,aHave,tHave)
+           
+            return;
+
         tk.Frame.__init__(self, parent)
         self.controller = controller
+
         label = tk.Label(self, text="Kinematics", font=TITLE_FONT)
-        label.grid(row=0, column=2, columnspan = 2, pady=10)
+        label.grid(row=0, column=0, columnspan = 5, pady=10)
+        
+        lb_intVal = tk.Label(self, text="Please enter all known values below:")        
+        lb_intVal.grid(row=1,column=0)        
+        
+        lb_aT = tk.Label(self, text="Acceleration")
+        lb_tT = tk.Label(self, text="Time")
+        lb_aT.grid(row=2, column=1, columnspan = 2)
+        lb_tT.grid(row=2, column=3, columnspan=2)
+        
+        lb_a = tk.Label(self, text="a (m/s^2) = ", padx=2)
+        en_a = tk.Entry(self, text="*", width=10)
+        lb_t = tk.Label(self, text="     t (s) = ")
+        en_t = tk.Entry(self, width=10)
+        lb_a.grid(row=3, column=1)
+        en_a.grid(row=3, column=2)
+        lb_t.grid(row=3, column=3)
+        en_t.grid(row=3, column=4)
+        
+
+        lb_type = tk.Label(self, text="Type", pady = 5)
+        lb_initial = tk.Label(self, text="Initial")
+        lb_final = tk.Label(self, text="Final")
+        lb_type.grid(row=4, column=0)        
+        lb_initial.grid(row=4, column=1, columnspan = 2)
+        lb_final.grid(row=4, column=3, columnspan=2)
+
+        lb_pos = tk.Label(self, text="Position")
+        lb_si = tk.Label(self, text="si (m) = ")  
+        en_si = tk.Entry(self, width=10)
+        lb_sf = tk.Label(self, text="sf (m) = ")        
+        en_sf = tk.Entry(self, width=10)
+        lb_pos.grid(row=5, column=0)
+        lb_si.grid(row=5, column=1)  
+        en_si.grid(row=5, column=2)
+        lb_sf.grid(row=5, column=3)        
+        en_sf.grid(row=5, column=4)
+
+        lb_vel = tk.Label(self, text="Velocity")
+        lb_vi = tk.Label(self, text="vi (m/s) = ")  
+        en_vi = tk.Entry(self, width=10)
+        lb_vf = tk.Label(self, text="vf (m/s) = ")        
+        en_vf = tk.Entry(self, width=10)
+        lb_vel.grid(row=6, column=0)
+        lb_vi.grid(row=6, column=1)  
+        en_vi.grid(row=6, column=2)
+        lb_vf.grid(row=6, column=3)        
+        en_vf.grid(row=6, column=4)
+        
+        lb_calcVal = tk.Label(self, text="Click on CALCULATE and values will display below:")        
+        bt_calc = tk.Button(self, text="CALCULATE",
+                            command=lambda: Calculate(en_si.get(),en_sf.get(),en_vi.get(),en_vf.get(),en_a.get(),en_t.get()))
+        lb_calcVal.grid(row=7,column=0,columnspan=3)        
+        bt_calc.grid(row=7,column=4, pady=10)
+        
+        lb_calc_a = tk.Label(self, text="a (m/s^2) = ", padx=2)
+        lb_val_calc_a = tk.Label(self, width=10)
+        lb_calc_t = tk.Label(self, text="     t (s) = ")
+        lb_val_calc_t = tk.Label(self, width=10)
+        lb_calc_a.grid(row=8, column=1)
+        lb_val_calc_a.grid(row=8, column=2)
+        lb_calc_t.grid(row=8, column=3)
+        lb_val_calc_t.grid(row=8, column=4)
+        
+
+        lb_calc_type = tk.Label(self, text="Type", pady = 5)
+        lb_calc_initial = tk.Label(self, text="Initial")
+        lb_calc_final = tk.Label(self, text="Final")
+        lb_calc_type.grid(row=9, column=0)        
+        lb_calc_initial.grid(row=9, column=1, columnspan = 2)
+        lb_calc_final.grid(row=9, column=3, columnspan=2)
+
+        lb_calc_pos = tk.Label(self, text="Position")
+        lb_calc_si = tk.Label(self, text="si (m) = ")  
+        lb_val_calc_si = tk.Label(self, width=10)
+        lb_calc_sf = tk.Label(self, text="sf (m) = ")        
+        lb_val_calc_sf = tk.Label(self, width=10)
+        lb_calc_pos.grid(row=10, column=0)
+        lb_calc_si.grid(row=10, column=1)  
+        lb_val_calc_si.grid(row=10, column=2)
+        lb_calc_sf.grid(row=10, column=3)        
+        lb_val_calc_sf.grid(row=10, column=4)
+
+        lb_calc_vel = tk.Label(self, text="Velocity")
+        lb_calc_vi = tk.Label(self, text="vi (m/s) = ")  
+        lb_val_calc_vi = tk.Label(self, width=10)
+        lb_calc_vf = tk.Label(self, text="vf (m/s) = ")        
+        lb_val_calc_vf = tk.Label(self, width=10)
+        lb_calc_vel.grid(row=11, column=0)
+        lb_calc_vi.grid(row=11, column=1)  
+        lb_val_calc_vi.grid(row=11, column=2)
+        lb_calc_vf.grid(row=11, column=3)        
+        lb_val_calc_vf.grid(row=11, column=4)
+    
+    
         button = tk.Button(self, border = '3', text="Back to the home page",
                            command=lambda: controller.show_frame("StartPage"))
-        button.grid(row=15, column=0)
+        button.grid(row=15, column=0, pady=10)
         
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.grid(row=15,column=3)
@@ -142,19 +400,6 @@ class FreeFall(tk.Frame):
 
 class Newton2nd(tk.Frame):
 
-#    def Fmenu(*args):
-#        if Ftype.get() == "Generic":
-#            menu_SolveFor = tk.OptionMenu(self, find, "Force", "Mass", "Acceleration")
-#            menu_SolveFor.grid(row=5, column=4, padx = 5, pady = 5)
-#
-#        elif Ftype.get() == "Gravity":
-#            menu_SolveFor = tk.OptionMenu(self, find, "Force", "Mass", "Gravity")
-#            menu_SolveFor.grid(row=5, column=4, padx = 5, pady = 5)
-#
-#        else:
-#            print('')
- 
-
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -163,7 +408,7 @@ class Newton2nd(tk.Frame):
         units.set(1)
         find = tk.StringVar()
         Ftype = tk.StringVar()
-        Ftype.set("Generic")
+#        Ftype.set("Generic")
         
         lbl_title = tk.Label(self, text="Newton's 2nd Law", font=TITLE_FONT)
         lbl_title.grid(row=1, column=3, padx=20)
@@ -228,9 +473,6 @@ class Newton2nd(tk.Frame):
             label1 = tk.Label(self)
             label2 = tk.Label(self)
             
-            label1.grid_remove()
-            label2.grid_remove()
-
             label1.grid(row=6, column=3, sticky='e')
             label2.grid(row=7, column=3, sticky='e')        
        
@@ -367,14 +609,14 @@ class Newton2nd(tk.Frame):
             force = mass * accel
             lbl_Atype.config(text="Force = ")
             lbl_ans.config(text = str(force) + " N")
-    
+
         Ftype.trace("w", Fmenu)
         find.trace("w", entry_fields)
 
         button = tk.Button(self, border = '3', text="Back to the home page",
                            command=lambda: controller.show_frame("StartPage"))
         button.grid(row=10, column=3)
-
+        
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
         bt_button.grid(row=10, column=4)
 
