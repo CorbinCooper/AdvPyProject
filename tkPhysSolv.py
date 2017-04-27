@@ -66,7 +66,7 @@ class StartPage(tk.Frame):
         lbl_kine = tk.Label(self, width = 35, text = "One-dimensional motion uses\nmathematics to describe motion \nof an object.")
         lbl_kine.grid(row=1,column=0, padx = 5, pady = 5)
        
-        lbl_new = tk.Label(self, width = 35, text = "Newton's laws of motion are\nthree physical laws that describe\nthe relationship between a body and\nthe forces acting upon it, and its\nm.otion in response to those forces.")
+        lbl_new = tk.Label(self, width = 35, text = "Solve systems that use force,\n mass, and acceleration to analyze\n an object's motion.")
         lbl_new.grid(row=1,column=1, padx = 5)
         
         lbl_em = tk.Label(self, width = 35, text = "Electromagnetism is a branch of\nphysics involving the study\nof the electromagnetic \nforce, a type of physical\ninteraction that occurs between\nelectrically charged particles.")
@@ -288,6 +288,7 @@ class Newton2nd(tk.Frame):
                 else:
                     print('')
 
+
             if Ftype.get() == "Spring":
                 if find.get() == "Spring Force":
                     label1.config(text="Spring Constant: ")
@@ -296,6 +297,9 @@ class Newton2nd(tk.Frame):
                     label2.config(text="Displacement (m): ")
                     disp = tk.Entry(self)
                     disp.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Spring_Force(float(cons.get()),float(disp.get())))
+
+                    
                 elif find.get() == "Spring Constant":
                     label1.config(text="Spring Force (N): ")
                     force = tk.Entry(self)
@@ -303,6 +307,9 @@ class Newton2nd(tk.Frame):
                     label2.config(text="Displacement (m): ")
                     disp = tk.Entry(self)
                     disp.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Spring_Cons(float(force.get()),float(disp.get())))
+
+                    
                 elif find.get() == "Displacement":
                     label1.config(text="Spring Force (N): ")
                     force = tk.Entry(self)
@@ -310,6 +317,9 @@ class Newton2nd(tk.Frame):
                     label2.config(text="Spring Constant:")
                     cons = tk.Entry(self)
                     cons.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Spring_Disp(float(force.get()),float(cons.get())))
+
+                    
                 else:
                     print('')
 
@@ -321,6 +331,8 @@ class Newton2nd(tk.Frame):
                     label2.config(text="Normal Force (N): ")
                     norm = tk.Entry(self)
                     norm.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Fric_Force(float(coeff.get()),float(norm.get())))
+                    
                 elif find.get() == "Friction Coefficient":
                     label1.config(text="Friction Force (N): ")
                     force = tk.Entry(self)
@@ -328,6 +340,8 @@ class Newton2nd(tk.Frame):
                     label2.config(text="Normal Force (N): ")
                     norm = tk.Entry(self)
                     norm.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Fric_Coeff(float(force.get()),float(norm.get())))
+                    
                 elif find.get() == "Normal Force":
                     label1.config(text="Friction Force (N): ")
                     force = tk.Entry(self)
@@ -335,6 +349,8 @@ class Newton2nd(tk.Frame):
                     label2.config(text="Friction Coefficient:")
                     coeff = tk.Entry(self)
                     coeff.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Fric_Norm(float(force.get()),float(coeff.get())))
+                    
                 else:
                     print('')
 
@@ -346,6 +362,8 @@ class Newton2nd(tk.Frame):
                     label2.config(text="Area (m^2): ")
                     area = tk.Entry(self)
                     area.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Press_Force(float(press.get()),float(area.get())))
+                    
                 elif find.get() == "Pressure":
                     label1.config(text="Force (N): ")
                     force = tk.Entry(self)
@@ -353,6 +371,8 @@ class Newton2nd(tk.Frame):
                     label2.config(text="Area (m^2): ")
                     area = tk.Entry(self)
                     area.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Press_Press(float(force.get()),float(area.get())))
+                    
                 elif find.get() == "Area":
                     label1.config(text=" Force (N): ")
                     force = tk.Entry(self)
@@ -360,6 +380,8 @@ class Newton2nd(tk.Frame):
                     label2.config(text="Pressure (Pa):")
                     press = tk.Entry(self)
                     press.grid(row=7, column=4)
+                    but_solve.config(command = lambda: Press_Area(float(force.get()),float(area.get())))
+                    
                 else:
                     print('')
 
@@ -395,7 +417,51 @@ class Newton2nd(tk.Frame):
             grav = weight / mass
             lbl_Atype.config(text="Gravity = ")
             lbl_ans.config(text = str(grav) + " m/s^2")
+
+        def Spring_Force(cons, disp):
+            force = cons*disp
+            lbl_Atype.config(text="Spring Force = ")
+            lbl_ans.config(text = str(force) + " N")
             
+        def Spring_Disp(force, cons):
+            disp = force / cons
+            lbl_Atype.config(text="Displacement = ")
+            lbl_ans.config(text = str(disp) + " m")
+            
+        def Spring_Cons(force, disp):
+            cons = force / disp
+            lbl_Atype.config(text="Spring Constant = ")
+            lbl_ans.config(text = str(cons))
+            
+        def Fric_Force(coeff, norm):
+            force = coeff*norm
+            lbl_Atype.config(text="Friction Force = ")
+            lbl_ans.config(text = str(force) + " N")
+            
+        def Fric_Coeff(force, norm):
+            coeff = force / norm
+            lbl_Atype.config(text="Friction Coefficient = ")
+            lbl_ans.config(text = str(coeff))
+            
+        def Fric_Norm(force, coeff):
+            norm = force / coeff
+            lbl_Atype.config(text="Normal Force = ")
+            lbl_ans.config(text = str(norm) + " N")
+
+        def Press_Force(press, area):
+            force = press*area
+            lbl_Atype.config(text="Force = ")
+            lbl_ans.config(text = str(force) + " N")
+            
+        def Press_Press(force, area):
+            press = force / area
+            lbl_Atype.config(text="Pressure = ")
+            lbl_ans.config(text = str(press) + " Pa")
+            
+        def Press_Area(force, press):
+            area = force / press
+            lbl_Atype.config(text="Area = ")
+            lbl_ans.config(text = str(area) + " m^2")            
     
         Ftype.trace("w", Fmenu)
         find.trace("w", entry_fields)
@@ -597,3 +663,4 @@ if __name__ == "__main__":
     app = PhysSolv()
     app.mainloop()
     
+
