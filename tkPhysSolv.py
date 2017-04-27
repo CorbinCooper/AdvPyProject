@@ -6,7 +6,7 @@ Created on Thu Apr 20 16:14:04 2017
 
 import tkinter as tk   # python3
 #import Tkinter as tk   # python
-
+import math
 
 TITLE_FONT = ("Helvetica", 18, "bold")
 SUB_FONT = ("Helvetica", 14, 'bold' )
@@ -498,7 +498,7 @@ class EM(tk.Frame): #Home page for Electromagnetism
         button4.grid(row=3, column=1, padx = 5, pady = 5)
         button5.grid(row=3, column=2, padx = 5)
         button6.grid(row=3, column=3, padx = 5)
-        button = tk.Button(self, text="Back",
+        button = tk.Button(self, text="Back to the Home Page",
                            command=lambda: controller.show_frame("StartPage"))
         button.grid(row=5, column=1, pady = 10)
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
@@ -510,6 +510,7 @@ class CoulombsLaw(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        
         label = tk.Label(self, text="Coulomb's Law", font=TITLE_FONT)
         label.grid(row=0, column=2, pady = 10)      
         
@@ -517,148 +518,375 @@ class CoulombsLaw(tk.Frame):
         label1.grid(row=1, column=3, pady = 10)
         label2 = tk.Label(self, text="Electric Field")
         label2.grid(row=1, column=7, pady = 10)
-        entry1 = tk.Entry(self)       
-        entry1.grid(row=2, column=3, pady = 10)
-        labe2 = tk.Label(self, text="Charge (q) 1")
+        q1 = tk.Entry(self)       
+        q1.grid(row=2, column=3, pady = 10)
+        labe2 = tk.Label(self, text="Charge 1 (e)")
         labe2.grid(row=2, column=2, pady = 10)
         
-        entry2 = tk.Entry(self)       
-        entry2.grid(row=3, column=3, pady = 10)
-        labe3 = tk.Label(self, text="Charge (q) 2")
+        q2 = tk.Entry(self)       
+        q2.grid(row=3, column=3, pady = 10)
+        labe3 = tk.Label(self, text="Charge 2 (e)")
         labe3.grid(row=3, column=2, pady = 10)
         
-        entry3 = tk.Entry(self)       
-        entry3.grid(row=4, column=3, pady = 10)
-        labe4 = tk.Label(self, text="Radius (r)")
+        r = tk.Entry(self)       
+        r.grid(row=4, column=3, pady = 10)
+        labe4 = tk.Label(self, text="Radius (m)")
         labe4.grid(row=4, column=2, pady = 10)
         
-        entry4 = tk.Entry(self)       
-        entry4.grid(row=2, column=7, pady = 10)
-        labe3 = tk.Label(self, text="Charge (q)")
-        labe3.grid(row=2, column=6, pady = 10)
+        q = tk.Entry(self)       
+        q.grid(row=2, column=8, pady = 10)
+        labe5 = tk.Label(self, text="Charge (e)")
+        labe5.grid(row=2, column=7, pady = 10)
         
-        entry5 = tk.Entry(self)       
-        entry5.grid(row=3, column=7, pady = 10)
-        labe6 = tk.Label(self, text="Radius (r)")
-        labe6.grid(row=3, column=6, pady = 10)
+        radius = tk.Entry(self)       
+        radius.grid(row=3, column=8, pady = 10)
+        labe6 = tk.Label(self, text="Radius (m)")
+        labe6.grid(row=3, column=7, pady = 10)
         
-        buttonCalcF = tk.Button(self, text="Calculate F",
-                           command=lambda: tk.Print(4))
+        buttonCalcF = tk.Button(self, text="Calculate F")
         buttonCalcF.grid(row=5, column=3, pady = 10)
-        buttonCalcE = tk.Button(self, text="Calculate E",
-                           command=lambda: tk.Print(4))
-        buttonCalcE.grid(row=5, column=7, pady = 10)
+        buttonCalcF.config(command=lambda: calc_coulombs_force(float(q1.get()), float(q2.get()), float(r.get())))
+                           
+        buttonCalcE = tk.Button(self, text="Calculate E")
+        buttonCalcE.grid(row=5, column=8, pady = 10)
+        buttonCalcE.config(command=lambda: calc_coulombs_electric(float(q.get()), float(radius.get())))
         
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
-        bt_button.grid(row=6, column=4, pady = 10)
-        button = tk.Button(self, text="Back",
+        bt_button.grid(row=7, column=4, pady = 10)
+        button = tk.Button(self, text="Back to Options Menu",
                            command=lambda: controller.show_frame("EM"))
-        button.grid(row=6, column=2, pady = 10)
-    def showEntryFields():
-        print(5)
+        button.grid(row=7, column=2, pady = 10)
+
+        ansF_text = tk.Label(self, text='')
+        ansF_text.grid(row=6, column=2) 
+        ansF = tk.Label(self, text='')
+        ansF.grid(row=6, column=3)
+
+        ansE_text = tk.Label(self, text='')
+        ansE_text.grid(row=6, column=5, columnspan = 2) 
+        ansE = tk.Label(self, text='')
+        ansE.grid(row=6, column=6, columnspan = 3)
         
+        def calc_coulombs_force(q1, q2, r):
+            e = 1.602177*10**(-19)
+            force = (1/(4*math.pi*8.854*10**(-12)))*(q1*e*q2*e/r**2)
+            ansF_text.config(text="Force     = ")
+            ansF.config(text = str(force) + " N")
+        def calc_coulombs_electric(q, radius):
+            e = 1.602177*10**(-19)
+            force = (1/(4*math.pi*8.854*10**(-12)))*(q*e/radius**2)
+            ansE_text.config(text="Electric Field     = ")
+            ansE.config(text = str(force) + " N/C")
+            
 class OhmsLaw(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        self.controller = controller
-        label = tk.Label(self, text="Ohm's Law", font=TITLE_FONT)
-        label.grid(row=0, column=2, pady = 10)
+        self.controller = controller        
 
-        label1 = tk.Label(self, text="Volyage (V)")
+        
+        
+        label = tk.Label(self, text="Ohm's Law", font=TITLE_FONT)
+        label.grid(row=0, column=2, pady = 10)      
+        
+        label1 = tk.Label(self, text="Potential (V)")
         label1.grid(row=1, column=3, pady = 10)
-        label2 = tk.Label(self, text="Current (I)")
-        label2.grid(row=1, column=7, pady = 10)
-        entry1 = tk.Entry(self)       
-        entry1.grid(row=2, column=3, pady = 10)
+        
+        I = tk.Entry(self)       
+        I.grid(row=2, column=3, pady = 10)
+
         labe2 = tk.Label(self, text="Current (I)")
         labe2.grid(row=2, column=2, pady = 10)
         
-        entry2 = tk.Entry(self)       
-        entry2.grid(row=3, column=3, pady = 10)
-        labe3 = tk.Label(self, text="Resistance (R)")
+        R1 = tk.Entry(self)       
+        R1.grid(row=3, column=3, pady = 10)
+        labe3 = tk.Label(self, text="Resistance (Ω)")
         labe3.grid(row=3, column=2, pady = 10)
-        
-        entry4 = tk.Entry(self)       
-        entry4.grid(row=2, column=7, pady = 10)
-        labe3 = tk.Label(self, text="Voltage (V)")
-        labe3.grid(row=2, column=6, pady = 10)
-        
-        entry5 = tk.Entry(self)       
-        entry5.grid(row=3, column=7, pady = 10)
-        labe6 = tk.Label(self, text="Resistance (R)")
-        labe6.grid(row=3, column=6, pady = 10)
-        buttonCalcF = tk.Button(self, text="Calculate V",
-                           command=lambda: tk.Print(4))
-        buttonCalcF.grid(row=5, column=3, pady = 10)
-        buttonCalcE = tk.Button(self, text="Calculate I",
-                           command=lambda: tk.Print(4))
-        buttonCalcE.grid(row=5
-                         , column=7, pady = 10)
 
-        button = tk.Button(self, text="Back",
-                           command=lambda: controller.show_frame("EM"))
-        button.grid(row=6, column=3, pady = 10)
-     
+        label2 = tk.Label(self, text="Current (I)")
+        label2.grid(row=1, column=8, pady = 10)
+        
+        V = tk.Entry(self)       
+        V.grid(row=2, column=8, pady = 10)
+        labe5 = tk.Label(self, text="Potential (V)")
+        labe5.grid(row=2, column=7, pady = 10)
+        
+        R2 = tk.Entry(self)       
+        R2.grid(row=3, column=8, pady = 10)
+        labe6 = tk.Label(self, text="Resistance (Ω)")
+        labe6.grid(row=3, column=7, pady = 10)
+        
+        buttonCalcV = tk.Button(self, text="Calculate V")
+        buttonCalcV.grid(row=5, column=3, pady = 10)
+        buttonCalcV.config(command=lambda: calc_potential(float(I.get()), float(R1.get())))
+
+        buttonCalcV = tk.Button(self, text="Calculate I")
+        buttonCalcV.grid(row=5, column=8, pady = 10)
+        buttonCalcV.config(command=lambda: calc_current(float(V.get()), float(R2.get())))                  
+        
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
-        bt_button.grid(row=6, column=4, pady = 10)
+        bt_button.grid(row=7, column=4, pady = 10)
+        button = tk.Button(self, text="Back to Options Menu",
+                           command=lambda: controller.show_frame("EM"))
+        button.grid(row=7, column=2, pady = 10)
+
+        ansP_text = tk.Label(self, text='')
+        ansP_text.grid(row=6, column=2) 
+        ansP = tk.Label(self, text='')
+        ansP.grid(row=6, column=3)
+
+        ansI_text = tk.Label(self, text='')
+        ansI_text.grid(row=6, column=5, columnspan = 2) 
+        ansI = tk.Label(self, text='')
+        ansI.grid(row=6, column=6, columnspan = 3)
+        
+        def calc_potential(I, R):
+            potential = I*R
+            ansP_text.config(text="Potential     = ")
+            ansP.config(text = str(potential) + " C")
+
+        def calc_current(V, R):
+            current = V / R
+            ansI_text.config(text="Current     = ")
+            ansI.config(text = str(current) + " A")
 
 class GuassLaw(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="Guass' Law", font=TITLE_FONT)
-        label.grid(row=0, column=2, pady = 10)
-        button = tk.Button(self, text="Back",
-                           command=lambda: controller.show_frame("EM"))
-        button.grid(row=2, column=2, pady = 10)
+        
+        label = tk.Label(self, text="Coulomb's Law", font=TITLE_FONT)
+        label.grid(row=0, column=2, pady = 10)      
+        
+        label1 = tk.Label(self, text="Force")
+        label1.grid(row=1, column=3, pady = 10)
+        label2 = tk.Label(self, text="Electric Field")
+        label2.grid(row=1, column=7, pady = 10)
+        q1 = tk.Entry(self)       
+        q1.grid(row=2, column=3, pady = 10)
+        labe2 = tk.Label(self, text="Charge 1 (e)")
+        labe2.grid(row=2, column=2, pady = 10)
+        
+        q2 = tk.Entry(self)       
+        q2.grid(row=3, column=3, pady = 10)
+        labe3 = tk.Label(self, text="Charge 2 (e)")
+        labe3.grid(row=3, column=2, pady = 10)
+        
+        r = tk.Entry(self)       
+        r.grid(row=4, column=3, pady = 10)
+        labe4 = tk.Label(self, text="Radius (m)")
+        labe4.grid(row=4, column=2, pady = 10)
+        
+        q = tk.Entry(self)       
+        q.grid(row=2, column=8, pady = 10)
+        labe5 = tk.Label(self, text="Charge (e)")
+        labe5.grid(row=2, column=7, pady = 10)
+        
+        radius = tk.Entry(self)       
+        radius.grid(row=3, column=8, pady = 10)
+        labe6 = tk.Label(self, text="Radius (m)")
+        labe6.grid(row=3, column=7, pady = 10)
+        
+        buttonCalcF = tk.Button(self, text="Calculate F")
+        buttonCalcF.grid(row=5, column=3, pady = 10)
+        buttonCalcF.config(command=lambda: calc_coulombs_force(float(q1.get()), float(q2.get()), float(r.get())))
+                           
+        buttonCalcE = tk.Button(self, text="Calculate E")
+        buttonCalcE.grid(row=5, column=8, pady = 10)
+        buttonCalcE.config(command=lambda: calc_coulombs_electric(float(q.get()), float(radius.get())))
         
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
-        bt_button.grid(row=5, column=2, pady = 10)
+        bt_button.grid(row=7, column=4, pady = 10)
+        button = tk.Button(self, text="Back to Options Menu",
+                           command=lambda: controller.show_frame("EM"))
+        button.grid(row=7, column=2, pady = 10)
+
+        ansF_text = tk.Label(self, text='')
+        ansF_text.grid(row=6, column=2) 
+        ansF = tk.Label(self, text='')
+        ansF.grid(row=6, column=3)
+
+        ansE_text = tk.Label(self, text='')
+        ansE_text.grid(row=6, column=5, columnspan = 2) 
+        ansE = tk.Label(self, text='')
+        ansE.grid(row=6, column=6, columnspan = 3)
+        
+        def calc_coulombs_force(q1, q2, r):
+            e = 1.602177*10**(-19)
+            force = (1/(4*math.pi*8.854*10**(-12)))*(q1*e*q2*e/r**2)
+            ansF_text.config(text="Force     = ")
+            ansF.config(text = str(force) + " N")
+        def calc_coulombs_electric(q, radius):
+            e = 1.602177*10**(-19)
+            force = (1/(4*math.pi*8.854*10**(-12)))*(q*e/radius**2)
+            ansE_text.config(text="Electric Field     = ")
+            ansE.config(text = str(force) + " N/C")
 
 class LorentzForce(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        self.controller = controller
+        self.controller = controller        
+
+        
+        
         label = tk.Label(self, text="Lorentz Force", font=TITLE_FONT)
-        label.grid(row=0, column=2, pady = 10)
-        button = tk.Button(self, text="Back",
-                           command=lambda: controller.show_frame("EM"))
-        button.grid(row=2, column=2, pady = 10)
+        label.grid(row=0, column=2, pady = 10)      
+        
+        label1 = tk.Label(self, text="Force")
+        label1.grid(row=1, column=3, pady = 10)
+        
+        q = tk.Entry(self)       
+        q.grid(row=2, column=3, pady = 10)
+        labe2 = tk.Label(self, text="Charge (e)")
+        labe2.grid(row=2, column=2, pady = 10)
+        
+        v = tk.Entry(self)       
+        v.grid(row=3, column=3, pady = 10)
+        labe3 = tk.Label(self, text="Velocity (m/s^2)")
+        labe3.grid(row=3, column=2, pady = 10)
+        
+        E = tk.Entry(self)       
+        E.grid(row=2, column=8, pady = 10)
+        labe5 = tk.Label(self, text="Electric Field (E)")
+        labe5.grid(row=2, column=7, pady = 10)
+        
+        B = tk.Entry(self)       
+        B.grid(row=3, column=8, pady = 10)
+        labe6 = tk.Label(self, text="Magnetic Field (B)")
+        labe6.grid(row=3, column=7, pady = 10)
+        
+        buttonCalcF = tk.Button(self, text="Calculate F")
+        buttonCalcF.grid(row=5, column=3, pady = 10)
+        buttonCalcF.config(command=lambda: calc_lorentz_force(float(q.get()), float(v.get()), float(E.get()), float(B.get())))
+                           
         
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
-        bt_button.grid(row=5, column=2, pady = 10)
+        bt_button.grid(row=7, column=4, pady = 10)
+        button = tk.Button(self, text="Back to Options Menu",
+                           command=lambda: controller.show_frame("EM"))
+        button.grid(row=7, column=2, pady = 10)
+
+        ansF_text = tk.Label(self, text='')
+        ansF_text.grid(row=6, column=2) 
+        ansF = tk.Label(self, text='')
+        ansF.grid(row=6, column=3)
+        
+        def calc_lorentz_force(q, v, E, B):
+            e = 1.602177*10**(-19)
+            force = q*e*(E + v * B)
+            ansF_text.config(text="Force     = ")
+            ansF.config(text = str(force) + " N")
+        
 
 class Resistivity(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="Resistivity", font=TITLE_FONT)
-        label.grid(row=0, column=2, pady = 10)
-        button = tk.Button(self, text="Back",
-                           command=lambda: controller.show_frame("EM"))
-        button.grid(row=2, column=2, pady = 10)
+
+        label = tk.Label(self, text="Lorentz Force", font=TITLE_FONT)
+        label.grid(row=0, column=2, pady = 10)      
+        
+        label1 = tk.Label(self, text="Force")
+        label1.grid(row=1, column=3, pady = 10)
+        
+        q = tk.Entry(self)       
+        q.grid(row=2, column=3, pady = 10)
+        labe2 = tk.Label(self, text="Charge (e)")
+        labe2.grid(row=2, column=2, pady = 10)
+        
+        v = tk.Entry(self)       
+        v.grid(row=3, column=3, pady = 10)
+        labe3 = tk.Label(self, text="Velocity (m/s^2)")
+        labe3.grid(row=3, column=2, pady = 10)
+        
+        E = tk.Entry(self)       
+        E.grid(row=2, column=8, pady = 10)
+        labe5 = tk.Label(self, text="Electric Field (E)")
+        labe5.grid(row=2, column=7, pady = 10)
+        
+        B = tk.Entry(self)       
+        B.grid(row=3, column=8, pady = 10)
+        labe6 = tk.Label(self, text="Magnetic Field (B)")
+        labe6.grid(row=3, column=7, pady = 10)
+        
+        buttonCalcF = tk.Button(self, text="Calculate F")
+        buttonCalcF.grid(row=5, column=3, pady = 10)
+        buttonCalcF.config(command=lambda: calc_lorentz_force(float(q.get()), float(v.get()), float(E.get()), float(B.get())))
+                           
         
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
-        bt_button.grid(row=5, column=2, pady = 10)
+        bt_button.grid(row=7, column=4, pady = 10)
+        button = tk.Button(self, text="Back to Options Menu",
+                           command=lambda: controller.show_frame("EM"))
+        button.grid(row=7, column=2, pady = 10)
+
+        ansF_text = tk.Label(self, text='')
+        ansF_text.grid(row=6, column=2) 
+        ansF = tk.Label(self, text='')
+        ansF.grid(row=6, column=3)
+        
+        def calc_lorentz_force(q, v, E, B):
+            e = 1.602177*10**(-19)
+            force = q*e*(E + v * B)
+            ansF_text.config(text="Force     = ")
+            ansF.config(text = str(force) + " N")
 
 class Conductivity(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
-        label = tk.Label(self, text="Conductivity", font=TITLE_FONT)
-        label.grid(row=0, column=2, pady = 10)
-        button = tk.Button(self, text="Back",
-                           command=lambda: controller.show_frame("EM"))
-        button.grid(row=2, column=2, pady = 10)
+
+        label = tk.Label(self, text="Lorentz Force", font=TITLE_FONT)
+        label.grid(row=0, column=2, pady = 10)      
+        
+        label1 = tk.Label(self, text="Force")
+        label1.grid(row=1, column=3, pady = 10)
+        
+        q = tk.Entry(self)       
+        q.grid(row=2, column=3, pady = 10)
+        labe2 = tk.Label(self, text="Charge (e)")
+        labe2.grid(row=2, column=2, pady = 10)
+        
+        v = tk.Entry(self)       
+        v.grid(row=3, column=3, pady = 10)
+        labe3 = tk.Label(self, text="Velocity (m/s^2)")
+        labe3.grid(row=3, column=2, pady = 10)
+        
+        E = tk.Entry(self)       
+        E.grid(row=2, column=8, pady = 10)
+        labe5 = tk.Label(self, text="Electric Field (E)")
+        labe5.grid(row=2, column=7, pady = 10)
+        
+        B = tk.Entry(self)       
+        B.grid(row=3, column=8, pady = 10)
+        labe6 = tk.Label(self, text="Magnetic Field (B)")
+        labe6.grid(row=3, column=7, pady = 10)
+        
+        buttonCalcF = tk.Button(self, text="Calculate F")
+        buttonCalcF.grid(row=5, column=3, pady = 10)
+        buttonCalcF.config(command=lambda: calc_lorentz_force(float(q.get()), float(v.get()), float(E.get()), float(B.get())))
+                           
         
         bt_button = tk.Button(self, text = 'EXIT', fg = 'red', bg = 'light grey', command = exit)
-        bt_button.grid(row=5, column=2, pady = 10)
+        bt_button.grid(row=7, column=4, pady = 10)
+        button = tk.Button(self, text="Back to Options Menu",
+                           command=lambda: controller.show_frame("EM"))
+        button.grid(row=7, column=2, pady = 10)
 
+        ansF_text = tk.Label(self, text='')
+        ansF_text.grid(row=6, column=2) 
+        ansF = tk.Label(self, text='')
+        ansF.grid(row=6, column=3)
+        
+        def calc_lorentz_force(q, v, E, B):
+            e = 1.602177*10**(-19)
+            force = q*e*(E + v * B)
+            ansF_text.config(text="Force     = ")
+            ansF.config(text = str(force) + " N")
 if __name__ == "__main__": 
     app = PhysSolv()
     app.mainloop()
