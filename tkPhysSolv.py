@@ -931,7 +931,7 @@ class GuassLaw(tk.Frame):
 
         q1 = tk.Entry(self)       
         q1.grid(row=2, column=3, pady = 10)
-        labe2 = tk.Label(self, text="Charge Inside(e)")
+        labe2 = tk.Label(self, text="Charge Inside (e)")
         labe2.grid(row=2, column=2, pady = 10)
         
         radius = tk.Entry(self)       
@@ -941,7 +941,7 @@ class GuassLaw(tk.Frame):
         
         q = tk.Entry(self)       
         q.grid(row=2, column=8, pady = 10)
-        labe5 = tk.Label(self, text="Charge Density (C/m^2")
+        labe5 = tk.Label(self, text="Charge Density (C/m^2)")
         labe5.grid(row=2, column=7, pady = 10)
         
         r = tk.Entry(self)       
